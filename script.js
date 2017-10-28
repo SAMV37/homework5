@@ -111,9 +111,9 @@ function loop(){
 //Delete 2 slash (/) signs below to see exercise number 2
 //loop();
 
-// ////////////////////////////////////////////////////End of exercise number 2
+////////////////////////////////////////////////////End of exercise number 2
 
-// ////////////////////////////////////////////////////Exercise 3
+////////////////////////////////////////////////////Exercise 3
 const pointArray = {
     hero: {
         x: 0,
@@ -232,7 +232,7 @@ function loop2(){
 
 
 //Delete 2 slash (/) signs below to see exercise number 3
-loop2();
+//loop2();
 
 const leftKey = 37;
 const upKey = 38;
@@ -249,9 +249,6 @@ document.addEventListener('keydown', function(event) {
     }else if(event.keyCode === leftKey) {
         pointArray.hero.x -= 15;
     }
-}, true);
+}, false);
 
-
-
-
-// ////////////////////////////////////////////////////End of exercise 3
+////////////////////////////////////////////////////End of exercise 3
