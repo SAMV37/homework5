@@ -306,6 +306,4 @@ document.addEventListener('keyup', function(event) {
     }
 }, false);
 
-
-
 ////////////////////////////////////////////////////End of exercise 3
