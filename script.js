@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////////////////////
 ///////Go to line 111 to see instructions for exercise number 2///////
 //////////////////////////////////////////////////////////////////////////
-///////Go to line 278 to see instructions for exercise number 3///////
+///////Go to line 277 to see instructions for exercise number 3///////
 
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
