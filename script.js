@@ -275,7 +275,7 @@ function loop2(){
 
 
 //Delete 2 slash (/) signs below to see exercise number 3
-//loop2();
+loop2();
 
 const leftKey = 37;
 const upKey = 38;
