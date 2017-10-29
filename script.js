@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////////////////////
 ///////Go to line 111 to see instructions for exercise number 2///////
 //////////////////////////////////////////////////////////////////////////
-///////Go to line 234 to see instructions for exercise number 3///////
+///////Go to line 278 to see instructions for exercise number 3///////
 
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
@@ -114,13 +114,29 @@ function loop(){
 ////////////////////////////////////////////////////End of exercise number 2
 
 ////////////////////////////////////////////////////Exercise 3
+
+function colorChanger2(number){
+    const color = colorArray[rand(3, 0)];
+    if(color === pointArray.badguys[number].color){
+        colorChanger(number);
+    }else{
+        pointArray.badguys[number].color = color;
+    }
+}
+
 const pointArray = {
     hero: {
+        score: 0,
+        finalscore: 0,
         x: 0,
         y: 0,
         height: 50,
         width: 50,
-        lost: false
+        lost: false,
+        right: false,
+        left: false,
+        up: false,
+        down: false
     },
     badguys: []
 };
@@ -133,8 +149,8 @@ function createPoint2(count, canvasHeight, canvasWidth){
     pointArray.badguys.push({
         x: rand(canvasWidth - 200, 100),
         y: rand(canvasHeight - 200, 100),
-        height: 100,
-        width: 100,
+        height: 50,
+        width: 50,
         xDelta: deltaArray[rand(2, 0)],
         yDelta: deltaArray[rand(2, 0)],
         color: colorArray[rand(3, 0)],
@@ -144,7 +160,7 @@ function createPoint2(count, canvasHeight, canvasWidth){
     createPoint2(count - 1, canvasHeight, canvasWidth);
 }
 
-createPoint2(5, canvas.height, canvas.width);
+createPoint2(3, canvas.height, canvas.width);
 
 function drawer2(number){
     if(number === pointArray.badguys.length){
@@ -165,20 +181,20 @@ function updater2(number){
     if(number === pointArray.badguys.length){
         return '';
     }
-    if(pointArray.badguys[number].x >= canvas.width - 100){
+    if(pointArray.badguys[number].x >= canvas.width - 50){
         pointArray.badguys[number].xDelta = -1;
-        colorChanger(number);
+        colorChanger2(number);
     }else if(pointArray.badguys[number].x <= 0){
         pointArray.badguys[number].xDelta = 1;
-        colorChanger(number);
+        colorChanger2(number);
     }
 
-    if(pointArray.badguys[number].y >= canvas.height - 100){
+    if(pointArray.badguys[number].y >= canvas.height - 50){
         pointArray.badguys[number].yDelta = -1;
-        colorChanger(number);
+        colorChanger2(number);
     }else if(pointArray.badguys[number].y <= 0){
         pointArray.badguys[number].yDelta = 1;
-        colorChanger(number);
+        colorChanger2(number);
     }
 
     pointArray.badguys[number].x += pointArray.badguys[number].speed*pointArray.badguys[number].xDelta;
@@ -208,7 +224,7 @@ function heroChecker(){
         if(pointArray.hero.x + pointArray.hero.width - pointArray.badguys[number].speed >= pointArray.badguys[number].x && pointArray.hero.x <= pointArray.badguys[number].x + pointArray.badguys[number].width - pointArray.badguys[number].speed){
             if(pointArray.hero.y + pointArray.hero.height - pointArray.badguys[number].speed >= pointArray.badguys[number].y && pointArray.hero.y <= pointArray.badguys[number].y + pointArray.badguys[number].height - pointArray.badguys[number].speed){
                 if(pointArray.hero.lost === false) {
-                    alert('Game Over ((');
+                    alert('Game Over, You score is ' + pointArray.hero.finalscore);
                     pointArray.hero.lost = true;
                 }
             }
@@ -216,6 +232,32 @@ function heroChecker(){
         collisionChecker(number + 1);
     }
     collisionChecker(0);
+
+    function checker(){
+        if(pointArray.hero.up === true){
+            pointArray.hero.y -= 5;
+        }
+        if(pointArray.hero.down === true){
+            pointArray.hero.y += 5;
+        }
+        if(pointArray.hero.right === true){
+            pointArray.hero.x += 5;
+        }
+        if(pointArray.hero.left === true){
+            pointArray.hero.x -= 5;
+        }
+    }
+    checker();
+
+    function scoreChecker(){
+        if(pointArray.hero.score === 300){
+            createPoint2(1, canvas.height, canvas.width);
+            pointArray.hero.finalscore += 1;
+            pointArray.hero.score = 0;
+        }
+    }
+
+    scoreChecker();
 }
 
 
@@ -225,6 +267,7 @@ function loop2(){
         drawer2(0);
         updater2(0);
         heroChecker();
+        pointArray.hero.score ++;
 
         requestAnimationFrame(loop2);
     }
@@ -241,14 +284,28 @@ const downKey = 40;
 
 document.addEventListener('keydown', function(event) {
     if(event.keyCode === upKey) {
-        pointArray.hero.y -= 15;
+        pointArray.hero.up = true;
     }else if(event.keyCode === downKey) {
-        pointArray.hero.y += 15;
+        pointArray.hero.down = true;
     }else if(event.keyCode === rightKey) {
-        pointArray.hero.x += 15;
+        pointArray.hero.right = true;
     }else if(event.keyCode === leftKey) {
-        pointArray.hero.x -= 15;
+        pointArray.hero.left = true;
     }
 }, false);
+
+document.addEventListener('keyup', function(event) {
+    if(event.keyCode === upKey) {
+        pointArray.hero.up = false;
+    }else if(event.keyCode === downKey) {
+        pointArray.hero.down = false;
+    }else if(event.keyCode === rightKey) {
+        pointArray.hero.right = false;
+    }else if(event.keyCode === leftKey) {
+        pointArray.hero.left = false;
+    }
+}, false);
+
+
 
 ////////////////////////////////////////////////////End of exercise 3
